@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-flaskdb
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}-flaskdb
+  replicas: {{ .Values.flaskdb.replicaCount }}
+  template:
+    metadata:
+      name: {{ .Release.Name }}-flaskdb
+      labels:
+        name: {{ .Release.Name }}-flaskdb
+        app: flaskdb
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-flaskdb
+          image: {{ .Values.flaskdb.image }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{ .Values.flaskdb.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: "/healthz"
+              port: {{ .Values.flaskdb.port }}
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: "/healthz"
+              port: {{ .Values.flaskdb.port }}
+{{ include "common.secrets" . | indent 12 }}
+          resources:
+            limits:
+              cpu: {{ .Values.flaskdb.resources.limits.cpu }}
+              memory: {{ .Values.flaskdb.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.flaskdb.resources.requests.cpu }}
+              memory: {{ .Values.flaskdb.resources.requests.memory }}
+          volumeMounts:
+{{ include "flaskdb.volumes" . | indent 8 }}

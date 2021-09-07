@@ -14,6 +14,9 @@ COPY requirements.txt .
 COPY plesk_mysql_connection_pool.py .
 RUN pip install  -r requirements.txt
 
+RUN adduser -D myuser && chown -R myuser /app
+USER myuser
+
 # Execution
 ENTRYPOINT ["python3"]
 CMD ["plesk_mysql_connection_pool.py"]

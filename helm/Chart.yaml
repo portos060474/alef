@@ -1,0 +1,10 @@
+apiVersion: v2
+version: 0.1.0
+appVersion: 0.1.0
+description: simple flask application with mysql connection pool
+name: flaskdb
+sources:
+  - https://github.com/portos060474/alef
+maintainers:
+  - name: Cristian Constantin
+    email: portos060474@gmail.com

@@ -1,0 +1,21 @@
+{{- if .Values.horizontalPodAutoscaler.enabled -}}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Release.Name }}-flaskdb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    name: {{ .Release.Name }}-flaskdb
+    app: flaskdb
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Release.Name }}-flaskdb
+  minReplicas: {{ .Values.horizontalPodAutoscaler.minReplicas }}
+  maxReplicas: {{ .Values.horizontalPodAutoscaler.maxReplicas }}
+  {{- with .Values.horizontalPodAutoscaler.metrics }}
+  metrics:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}

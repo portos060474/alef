@@ -1,0 +1,35 @@
+# Horizontal Pod Autoscaler
+# https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
+horizontalPodAutoscaler:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 80
+
+
+flaskdb:
+  env: "dev"
+  image: "xxxx_app"
+  port: 5000
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: "2"
+      memory: "2048Mi"
+    requests:
+      cpu: "2"
+      memory: "2048Mi"
+
+sample_value:
+  host: whatever_host
+  auth: password
+
+secret:
+  token: "Asdasdasdasda"
+  authorization: password

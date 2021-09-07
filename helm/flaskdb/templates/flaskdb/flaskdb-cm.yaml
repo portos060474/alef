@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-flaskdb-cm
+  labels:
+    name: {{ .Release.Name }}-flaskdb-cm
+data:
+  application-cm.yml: |-
+{{ tpl (.Files.Get "conf/flaskdb-config.yaml.tpl") . | indent 4 }}

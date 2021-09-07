@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-flaskdb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    name: {{ .Release.Name }}-flaskdb
+{{ include "flaskdb.labelBoilerplate" . | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.flaskdb.port }}
+      name: http
+  selector:
+    name: {{ .Release.Name }}-flaskdb
