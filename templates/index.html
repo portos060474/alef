@@ -6,7 +6,22 @@
   <body>
     <div class="container">
       <h1>List of tutorials </h1>
-     
+      <table>
+      {% for result in results %}
+      <tr>
+        <td width=200px>
+        {{ result['tutorial_title'] }} 
+        </td>
+        <td width=200px>
+        {{ result['tutorial_author'] }} 
+        </td>
+        <td width=200px>
+        {{ result['submission_date'] }} 
+        </td>
+
+      </tr>
+	{% endfor %}
+  </table>
     </div>
   </body>
 </html>
