@@ -1,6 +1,6 @@
 
 # !flask/bin/python
-from flask import Flask, render_template
+from flask import Flask, render_template, make_response
 import mysql.connector
 
 app = Flask(__name__)
@@ -17,12 +17,15 @@ cnx = mysql.connector.connect(
     pool_size = 3
     )
 
-    
-
-
-
     # cnx.close()
 
+
+@app.route('/healthz', methods=['GET'])
+def healthz():
+    """
+    respond to health check
+    """
+    return  'ok', 200
 
 @app.route('/log', methods=['GET'])
 def log_data():
